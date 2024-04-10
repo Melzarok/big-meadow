@@ -1,32 +1,25 @@
-// 3D Scroll
-
-let zSpacing = -1000,
-	lastPos = zSpacing / 5,
+let depthSpacing = -1000,
+	previousScrollPosition = depthSpacing / 5,
 	$frames = document.getElementsByClassName('frame'),
 	frames = Array.from($frames),
-	zVals = []
+	zIndices = []
 
 window.onscroll = function () {
-
 	let top = document.documentElement.scrollTop,
-		delta = lastPos - top
+		delta = previousScrollPosition - top
 
-	lastPos = top
+	previousScrollPosition = top
 
 	frames.forEach(function (n, i) {
-		zVals.push((i * zSpacing) + zSpacing)
-		zVals[i] += delta * -5
+		zIndices.push((i * depthSpacing) + depthSpacing)
+		zIndices[i] += delta * -5
 		let frame = frames[i],
-			transform = `translateZ(${zVals[i]}px)`,
-			opacity = zVals[i] < Math.abs(zSpacing) / 1.8 ? 1 : 0
+			transform = `translateZ(${zIndices[i]}px)`,
+			opacity = zIndices[i] < Math.abs(depthSpacing) / 1.8 ? 1 : 0
 		frame.setAttribute('style', `transform: ${transform}; opacity: ${opacity}`)
 	})
 
 }
-
-window.scrollTo(0, 1)
-
-// Audio
 
 let soundButton = document.querySelector('.soundbutton')
 audio = document.querySelector('.audio')
@@ -42,4 +35,9 @@ window.onfocus = function () {
 
 window.onblur = function () {
 	audio.pause()
+}
+
+window.onload = function () {
+	document.querySelector('html').classList.add('--loaded')
+	window.scrollTo(0, 1)
 }

@@ -5,10 +5,10 @@
 }
 :root {
   --index: calc(1vw + 1vh);
-  --gutter: 30px;
+  --gap: 30px;
   --side-small: 26;
   --side-big: 36;
-  --depth: 7300px;
+  --fakeHeight: 7000px;
   --transition: 0.75s cubic-bezier(0.075, 0.5, 0, 1);
 }
 
@@ -35,7 +35,7 @@ body {
   font-size: calc(var(--index) * 0.8);
   font-family: raleway_c, sans-serif;
   line-height: 1.75;
-  height: var(--depth);
+  height: var(--fakeHeight);
   font-weight: 300;
 }
 .container {
@@ -59,6 +59,29 @@ body {
   will-change: transform;
   transform-style: preserve-3d;
 }
+/* .frame.--main {
+  background: #000;
+} */
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* opacity: 0; */
+  opacity: 1;
+  transition: opacity 1.5s ease;
+  z-index: 9;
+}
+.overlay svg {
+  max-width: 100px;
+}
+html.--loaded .overlay {
+  opacity: 0;
+}
 h1,
 h2,
 h3,
@@ -80,10 +103,10 @@ h4 {
   background-size: cover;
 }
 .frame-media--left {
-  right: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+  right: calc(var(--side-small) / 2 * var(--index) + var(--gap));
 }
 .frame-media--right {
-  left: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+  left: calc(var(--side-small) / 2 * var(--index) + var(--gap));
 }
 .frame_bg {
   background-color: rgb(0 0 0 / 0.87);
@@ -93,10 +116,10 @@ video.frame-media {
   height: calc(var(--index) * var(--side-small));
 }
 video.frame-media--right {
-  left: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+  left: calc(var(--side-big) / 2 * var(--index) + var(--gap));
 }
 video.frame-media--left {
-  right: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+  right: calc(var(--side-big) / 2 * var(--index) + var(--gap));
 }
 .text--right > * {
   position: relative;
@@ -138,4 +161,17 @@ h3 {
 
 .soundbutton.paused {
   opacity: 0.25;
+}
+
+.soundbutton.paused .icon-paused {
+  display: block;
+}
+.soundbutton.paused .icon-enabled {
+  display: none;
+}
+.soundbutton:not(.paused) .icon-paused {
+  display: none;
+}
+.soundbutton:not(.paused) .icon-enabled {
+  display: block;
 }
